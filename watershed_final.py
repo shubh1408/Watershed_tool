@@ -3,7 +3,6 @@ import os
 from arcpy.sa import *
 import arcpy.mapping
 
-
 in_Dem=arcpy.GetParameterAsText(0)
 out_Workspace=arcpy.GetParameterAsText(1)
 
