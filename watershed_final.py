@@ -40,7 +40,6 @@ def project_raster(in_raster, out_raster, out_coordinate_system, resampling_type
     arcpy.ProjectRaster_management(in_raster, out_raster, out_coordinate_system, resampling_type=resampling_type)
     return out_raster
 
-
 # Use the project_raster function
 arcpy.AddMessage("DEM Projection started")
 out_coordinate_system = arcpy.SpatialReference(3857)  # WGS 1984 Web Mercator
@@ -62,17 +61,13 @@ flow_dirn = FlowDirection(fill_raster, "NORMAL")
 flow_dirn.save(out_Workspace + "_Flow_Direction.tif")
 arcpy.AddMessage("Flow Direction process completed")
 
-
 # Calculate Flow Accumulation Raster
 arcpy.AddMessage("Flow Accumulation process started")
 flow_acc = FlowAccumulation(flow_dirn, "", "FLOAT","D8")
 flow_acc.save(out_Workspace + "_Flow_Accumulation.tif")
 arcpy.AddMessage("Flow Accumulation process completed")
 
-# --------------------------------------------------------------------------------------------------------
-
 #give threshold value for flow accumulation % of maximum flow accumulation value
-
 # Calculate the maximum flow accumulation value
 arcpy.AddMessage("Calculating Maximum Flow Accumulation Value")
 max_flow_acc = arcpy.GetRasterProperties_management(flow_acc, "MAXIMUM")
@@ -83,8 +78,6 @@ threshold = 0.02 * max_flow_acc_value
 
 arcpy.AddMessage("Maximum Flow Accumulation Value: {} ".format(max_flow_acc_value))
 arcpy.AddMessage("Threshold for Flow Accumulation: {}".format(threshold))
-
-# ------------------------------------------------------------------------------------------------------------
   
 # Raster Calculator
 arcpy.AddMessage("Calculating Streams Raster Value")
@@ -153,7 +146,6 @@ arcpy.mapping.AddLayer(df, raster_layer, "TOP")
 
 #Set layer extent
 df.extent = raster_layer.getExtent(True)
-
 
 #clip streams_highest_order_fl with largest basin polygon
 clip_featurelayer(stream_order_fl, largest_polygon, out_Workspace + "_Final_Stream.shp")
